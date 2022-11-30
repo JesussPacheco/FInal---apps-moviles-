@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app_mycinees/UI/restaurant_list.dart';
 
-import 'UI/movie_list.dart';
+import 'UI/restaurant_list.dart';
 
 void main() {
   runApp(MyRestaurants());
