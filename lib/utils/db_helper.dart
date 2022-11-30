@@ -16,32 +16,32 @@ class DbHelper {
 
   Future<Database> openDb() async {
     if (db == null) {
-      db = await openDatabase(join(await getDatabasesPath(), 'movies.db'),
+      db = await openDatabase(join(await getDatabasesPath(), 'restaurants.db'),
           onCreate: (db, version) {
             db.execute(
-                'CREATE TABLE movies(id INTEGER PRIMARY KEY, title TEXT)');
+                'CREATE TABLE restaurants(id INTEGER PRIMARY KEY, title TEXT)');
           }, version: version);
     }
     return db!;
   }
 
-  Future<int> insertMovie(Restaurant movie) async {
-    int id = await db!.insert('movies', movie.toMap(),
+  Future<int> insertRestaurant(Restaurant restaurant) async {
+    int id = await db!.insert('restaurants', restaurant.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);//opcional
     return id;
   }
 
-  Future<bool> isFavorite(Restaurant movie) async {
+  Future<bool> isFavorite(Restaurant restaurant) async {
     final List<Map<String, dynamic>> maps =
-    await db!.query('movies', where: 'id = ?', whereArgs: [movie.id]);
+    await db!.query('restaurants', where: 'id = ?', whereArgs: [restaurant.id]);
     print("maps --> ");
     print(maps.length);
     return maps.length > 0;
   }
 
-  Future<int> deleteMovie(Restaurant movie) async {
+  Future<int> deleteRestaurant(Restaurant restaurant) async {
     int result =
-    await db!.delete('movies', where: 'id = ?', whereArgs: [movie.id]);
+    await db!.delete('restaurants', where: 'id = ?', whereArgs: [restaurant.id]);
     return result;
   }
 }

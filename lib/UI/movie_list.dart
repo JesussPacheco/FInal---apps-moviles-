@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:app_mycinees/utils/db_helper.dart';
 import 'package:app_mycinees/utils/http_helper.dart';
 import 'package:app_mycinees/models/restaurant.dart';
-import 'package:app_mycinees/UI/movie_detail.dart';
+import 'package:app_mycinees/UI/restaurant_detail.dart';
 
-class MovieList extends StatefulWidget {
+import 'movie_detail.dart';
+
+class RestaurantList extends StatefulWidget {
   @override
-  _MovieListState createState() => _MovieListState();
+  _RestaurantListState createState() => _RestaurantListState();
 }
 
-class _MovieListState extends State<MovieList> {
-  List<Restaurant> movies=[];
-  int? moviesCount;
+class _RestaurantListState extends State<RestaurantList> {
+  List<Restaurant> restaurants=[];
+  int? restaurantsCount;
   int page = 1;
   bool loading = true;
   HttpHelper? helper;
@@ -20,7 +22,7 @@ class _MovieListState extends State<MovieList> {
 
   Future initialize() async{
     //ojo
-    //movies = List<Restaurant>();
+    //restaurants = List<Restaurant>();
     loadMore();
     initScrollController();
   }
@@ -37,13 +39,13 @@ class _MovieListState extends State<MovieList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Moviesss'),
+        title: Text('My Restaurantsss'),
       ),
       body: ListView.builder(
         controller: _scrollController,
-        itemCount: movies!.length,
+        itemCount: restaurants!.length,
         itemBuilder: (BuildContext context, int index){
-          return MovieRow(movies![index]);
+          return RestaurantRow(restaurants![index]);
         },
       ),
     );
@@ -51,14 +53,14 @@ class _MovieListState extends State<MovieList> {
 
   void loadMore() {
     helper!.getUpcoming(page.toString()).then((value) {
-      movies += value;
+      restaurants += value;
       setState(() {
-        moviesCount = movies.length;
-        movies = movies;
+        restaurantsCount = restaurants.length;
+        restaurants = restaurants;
         page++;
       });
 
-      if(movies.length % 20 > 0){
+      if(restaurants.length % 20 > 0){
         loading = false;
       }
     });
@@ -76,17 +78,17 @@ class _MovieListState extends State<MovieList> {
   }
 }
 
-class MovieRow extends StatefulWidget {
-  final Restaurant movie;
-  MovieRow(this.movie);
+class RestaurantRow extends StatefulWidget {
+  final Restaurant restaurant;
+  RestaurantRow(this.restaurant);
 
   @override
-  _MovieRowState createState() => _MovieRowState(movie);
+  _RestaurantRowState createState() => _RestaurantRowState(restaurant);
 }
 
-class _MovieRowState extends State<MovieRow> {
-  Restaurant movie;
-  _MovieRowState(this.movie);
+class _RestaurantRowState extends State<RestaurantRow> {
+  Restaurant restaurant;
+  _RestaurantRowState(this.restaurant);
 
   late bool favorite;
   late DbHelper dbHelper;
@@ -96,7 +98,7 @@ class _MovieRowState extends State<MovieRow> {
   void initState(){
     favorite = false;
     dbHelper = DbHelper();
-    isFavorite(movie);
+    isFavorite(restaurant);
     super.initState();
   }
 
@@ -109,29 +111,29 @@ class _MovieRowState extends State<MovieRow> {
       elevation: 2.0,
       child: ListTile(
         leading: Hero(
-          tag: 'poster_'+widget.movie.id.toString(),
-          child: Image.network('https://image.tmdb.org/t/p/w500'+movie.posterPath.toString()),
+          tag: 'poster_'+widget.restaurant.id.toString(),
+          child: Image.network('https://image.tmdb.org/t/p/w500'+restaurant.posterPath.toString()),
         ),
-        title: Text(widget.movie.title.toString()),
-        subtitle: Text(widget.movie.overview.toString()),
+        title: Text(widget.restaurant.title.toString()),
+        subtitle: Text(widget.restaurant.overview.toString()),
         onTap: (){
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) => MovieDetail(widget.movie)
+                builder: (BuildContext context) => RestaurantDetail(widget.restaurant)
             ),
           ).then((value) {
-            isFavorite(movie);
+            isFavorite(restaurant);
           });
         },
         trailing: IconButton(
           icon: Icon(Icons.favorite),
           color: favorite ? Colors.red : Colors.grey,
           onPressed: (){
-            favorite ? dbHelper.deleteMovie(movie) : dbHelper.insertMovie(movie);
+            favorite ? dbHelper.deleteRestaurant(restaurant) : dbHelper.insertRestaurant(restaurant);
             setState(() {
               favorite = !favorite;
-              movie.isFavorite = favorite;
+              restaurant.isFavorite = favorite;
             });
           },
         ),
@@ -139,11 +141,11 @@ class _MovieRowState extends State<MovieRow> {
     );
   }
 
-  Future isFavorite(Restaurant movie) async {
+  Future isFavorite(Restaurant restaurant) async {
     await dbHelper.openDb();
-    favorite = await dbHelper.isFavorite(movie);
+    favorite = await dbHelper.isFavorite(restaurant);
     setState(() {
-      movie.isFavorite = favorite;
+      restaurant.isFavorite = favorite;
     });
   }
 }

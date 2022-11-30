@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:app_mycinees/models/restaurant.dart';
 import 'package:app_mycinees/utils/db_helper.dart';
 
-class MovieDetail extends StatefulWidget {
-  final Restaurant movie;
-  MovieDetail(this.movie);
+class RestaurantDetail extends StatefulWidget {
+  final Restaurant restaurant;
+  RestaurantDetail(this.restaurant);
 
   @override
-  _MovieDetailState createState() => _MovieDetailState(movie);
+  _RestaurantDetailState createState() => _RestaurantDetailState(restaurant);
 }
 
-class _MovieDetailState extends State<MovieDetail> {
-  final Restaurant movie;
+class _RestaurantDetailState extends State<RestaurantDetail> {
+  final Restaurant restaurant;
   DbHelper? dbHelper;
   String? path;
 
-  _MovieDetailState(this.movie);
+  _RestaurantDetailState(this.restaurant);
 
   @override
   void initState(){
@@ -37,7 +37,7 @@ class _MovieDetailState extends State<MovieDetail> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(movie.title.toString()),
+        title: Text(restaurant.title.toString()),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -45,8 +45,8 @@ class _MovieDetailState extends State<MovieDetail> {
             Container(
               padding: EdgeInsets.all(8),
               child: Hero(
-                  tag: 'poster_' + movie.id.toString(),
-                  child: Image.network('https://image.tmdb.org/t/p/w500'+movie.posterPath.toString(),
+                  tag: 'poster_' + restaurant.id.toString(),
+                  child: Image.network('https://image.tmdb.org/t/p/w500'+restaurant.posterPath.toString(),
                     height: height / 1.5,)
               ),
             )
