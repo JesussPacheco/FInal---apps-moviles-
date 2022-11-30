@@ -1,10 +1,9 @@
-
-import 'package:app_mycinees/UI/restaurant_list.dart';
 import 'package:flutter/material.dart';
+
+import 'package:google_fonts/google_fonts.dart';
 
 import 'Widget/bezierContainer.dart';
 import 'loginPage.dart';
-
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key ?key, this.title}) : super(key: key);
@@ -63,19 +62,26 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _submitButton() {
     return Container(
-        height: 50,
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: ElevatedButton(
-          child: const Text('Register'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => RestaurantList()
-              ),
-            );
-          },
-        )
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.symmetric(vertical: 15),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: Colors.grey.shade200,
+                offset: Offset(2, 4),
+                blurRadius: 5,
+                spreadRadius: 2)
+          ],
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [Color(0xfffbb448), Color(0xfff7892b)])),
+      child: Text(
+        'Register Now',
+        style: TextStyle(fontSize: 20, color: Colors.white),
+      ),
     );
   }
 
@@ -154,7 +160,11 @@ class _SignUpPageState extends State<SignUpPage> {
         height: height,
         child: Stack(
           children: <Widget>[
-            Image(image: NetworkImage("https://assets-es.imgfoot.com/media/cache/1200x1200/cristiano-ronaldo-enerve.jpg")),
+            Positioned(
+              top: -MediaQuery.of(context).size.height * .15,
+              right: -MediaQuery.of(context).size.width * .4,
+              child: BezierContainer(),
+            ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: SingleChildScrollView(
@@ -163,6 +173,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(height: height * .2),
+                    _title(),
                     SizedBox(
                       height: 50,
                     ),
@@ -171,7 +182,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: 20,
                     ),
                     _submitButton(),
-
                     SizedBox(height: height * .14),
                     _loginAccountLabel(),
                   ],
