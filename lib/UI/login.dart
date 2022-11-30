@@ -1,3 +1,4 @@
+import 'package:app_mycinees/UI/restaurant_list.dart';
 import 'package:flutter/material.dart';
 
 class LoginStatefulWidget extends StatefulWidget {
@@ -66,8 +67,12 @@ class _MyStatefulWidgetState extends State<LoginStatefulWidget> {
                 child: ElevatedButton(
                   child: const Text('Login'),
                   onPressed: () {
-                    print(nameController.text);
-                    print(passwordController.text);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => RestaurantList()
+                      ),
+                    );
                   },
                 )
             ),

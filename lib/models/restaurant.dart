@@ -17,8 +17,7 @@ class Restaurant {
         this.isFavorite});
 
   Restaurant.fromJson(Map<String, dynamic> json) {
-    popularity = json['popularity'].toDouble();
-    posterPath = json['poster_path'];
+    posterPath = json['poster'];
     id = json['id'];
     title = json['title'];
     overview = json['overview'];

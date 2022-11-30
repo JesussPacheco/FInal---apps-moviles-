@@ -112,10 +112,9 @@ class _RestaurantRowState extends State<RestaurantRow> {
       child: ListTile(
         leading: Hero(
           tag: 'poster_'+widget.restaurant.id.toString(),
-          child: Image.network('https://image.tmdb.org/t/p/w500'+restaurant.posterPath.toString()),
+          child: Image.network(restaurant.posterPath.toString(),fit: BoxFit.fill),
         ),
         title: Text(widget.restaurant.title.toString()),
-        subtitle: Text(widget.restaurant.overview.toString()),
         onTap: (){
           Navigator.push(
             context,

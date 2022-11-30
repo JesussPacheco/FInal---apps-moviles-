@@ -46,7 +46,7 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
               padding: EdgeInsets.all(8),
               child: Hero(
                   tag: 'poster_' + restaurant.id.toString(),
-                  child: Image.network('https://image.tmdb.org/t/p/w500'+restaurant.posterPath.toString(),
+                  child: Image.network(restaurant.posterPath.toString(),
                     height: height / 1.5,)
               ),
             )
