@@ -1,3 +1,4 @@
+import 'package:app_mycinees/UI/login.dart';
 import 'package:flutter/material.dart';
 import 'package:app_mycinees/UI/restaurant_list.dart';
 
@@ -16,7 +17,7 @@ class MyRestaurants extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RestaurantList(),
+      home: LoginStatefulWidget(),
     );
   }
 }
